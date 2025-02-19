@@ -1267,6 +1267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1454038920}
+  - component: {fileID: 1454038921}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1289,6 +1290,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1454038921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454038919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a2789b271350594b82a6375b03614d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainGameCanvas: {fileID: 662595536}
+  upgradeCanvas: {fileID: 617918591}
+  scrapCounter: {fileID: 966596648}
+  fleetDamagePerSecond: {fileID: 152251027}
+  shipObj: {fileID: 1942826282}
+  textPopup: {fileID: 0}
+  backgroundObj: {fileID: 1839740339}
+  upgradeUIToSpawn: {fileID: 0}
+  upgradeUIParent: {fileID: 0}
+  attackPerSecondObjToSpawn: {fileID: 0}
 --- !u!1 &1567603736
 GameObject:
   m_ObjectHideFlags: 0
@@ -1963,7 +1986,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1942826284}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1454038921}
+        m_TargetAssemblyTypeName: ShipManager, Assembly-CSharp
+        m_MethodName: OnShipClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1944760084
 GameObject:
   m_ObjectHideFlags: 0

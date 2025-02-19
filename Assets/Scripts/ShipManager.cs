@@ -71,6 +71,36 @@ public class ShipManager : MonoBehaviour
         ReduceHealth();
     }
 
+
+    //Upgrade UI Interaction
+    public void OnUpgradeButtonPress() { 
+    
+        MainGameCanvas.SetActive(false);
+        upgradeCanvas.SetActive(true);
+        
+    }
+
+    public void OnResumeButtonPress() { 
+    
+        upgradeCanvas.SetActive(false);
+        MainGameCanvas.SetActive(true);
+    }
+
+    //For fleet auto damage
+    public void FleetDamageIncrease(double amount) {
+
+        //Logic here is needed
+
+        //Goals:
+
+        //Initial auto damage is nonexistent
+
+        //Gradually increase the amount of damage done automatically over time
+
+
+    }
+
+
     public void ReduceHealth() {
 
         if(shipHealth == 0) {

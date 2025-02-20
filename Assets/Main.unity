@@ -1280,6 +1280,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1454038920}
   - component: {fileID: 1454038921}
+  - component: {fileID: 1454038922}
+  - component: {fileID: 1454038923}
+  - component: {fileID: 1454038924}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1319,11 +1322,50 @@ MonoBehaviour:
   scrapCounter: {fileID: 966596648}
   fleetDamagePerSecond: {fileID: 152251027}
   shipObj: {fileID: 1942826282}
-  textPopup: {fileID: 0}
+  damageTextPopup: {fileID: 5224501219732005111, guid: eeb26caee0c5f194d8a39ee504e93f6c, type: 3}
   backgroundObj: {fileID: 1839740339}
-  upgradeUIToSpawn: {fileID: 0}
-  upgradeUIParent: {fileID: 0}
+  fleetUpgrades:
+  - {fileID: 11400000, guid: a3487e6a3d66aeb499cd4ac72a98b2df, type: 2}
+  - {fileID: 11400000, guid: 217d3cd3bab8a5e499bdddd3186659a9, type: 2}
+  upgradeUIToSpawn: {fileID: 5719931587872166619, guid: 815d65e06ea443042b5d4ecab092aeac, type: 3}
+  upgradeUIParent: {fileID: 1944760085}
   attackPerSecondObjToSpawn: {fileID: 2554236059794872206, guid: 69657490157ffc1478e7f3b051e32023, type: 3}
+--- !u!114 &1454038922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454038919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 328e410ff14418e468f699be26546ad9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1454038923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454038919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6581977141a285244bc6fe5bc2f60ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1454038924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454038919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba81000a6239d54096906c52e5d2dc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1567603736
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,9 +1423,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Resume
-
-'
+  m_text: Back To Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1410,8 +1450,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 64
+  m_fontSizeBase: 64
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1488,7 +1528,7 @@ RectTransform:
   m_GameObject: {fileID: 1601030079}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.8724, y: 3.8724, z: 3.8724}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1567603737}
@@ -1497,7 +1537,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 42.613, y: 1393}
-  m_SizeDelta: {x: 185.225, y: 63.297}
+  m_SizeDelta: {x: 400, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1601030081
 MonoBehaviour:
@@ -2057,7 +2097,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000091552734}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1944760086
@@ -2094,8 +2134,8 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 0, y: 0}
+  m_CellSize: {x: 800, y: 650}
+  m_Spacing: {x: 150, y: 60}
   m_Constraint: 1
   m_ConstraintCount: 1
 --- !u!1 &1950849761

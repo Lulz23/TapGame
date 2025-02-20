@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Upgrades : MonoBehaviour
+public class UpgradeButtonReferences : MonoBehaviour
 {
 
     public Button upgradeButton;

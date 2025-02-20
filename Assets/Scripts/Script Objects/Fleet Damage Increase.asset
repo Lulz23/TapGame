@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7758f126955d4db4489fd256a181c9cd, type: 3}
-  m_Name: Damage Per Click 2
+  m_Script: {fileID: 11500000, guid: 2e52e8166aae6714cbd206bc85f6e595, type: 3}
+  m_Name: Fleet Damage Increase
   m_EditorClassIdentifier: 
-  UpgradeAmount: 4
-  OriginalUpgradeCost: 500
-  CurrentUpgradeCost: 500
+  UpgradeAmount: 1
+  OriginalUpgradeCost: 2
+  CurrentUpgradeCost: 2
   CostIncreaseMultiplierPerUpgrade: 0.08
-  UpgradeButtonText: +4 Damage Per Tap
-  UpgradeButtonDescription: Increases damage per tap/click.
+  UpgradeButtonText: Better cannons
+  UpgradeButtonDescription: Increase Damage by 1

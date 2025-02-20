@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7758f126955d4db4489fd256a181c9cd, type: 3}
-  m_Name: Damage Per Click 5
+  m_Name: Scrap Earned
   m_EditorClassIdentifier: 
   UpgradeAmount: 1
-  OriginalUpgradeCost: 100
-  CurrentUpgradeCost: 100
+  OriginalUpgradeCost: 2
+  CurrentUpgradeCost: 2
   CostIncreaseMultiplierPerUpgrade: 0.08
-  UpgradeButtonText: +1 Damage Per Tap
-  UpgradeButtonDescription: Increases damage per tap/click.
+  UpgradeButtonText: Scrap Scavenger
+  UpgradeButtonDescription: Increase Scrap Earned by 1

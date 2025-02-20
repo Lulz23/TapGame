@@ -19,11 +19,12 @@ public class ShipManager : MonoBehaviour
     [SerializeField] private GameObject shipObj;
     
     
-    public GameObject textPopup;
+    public GameObject damageTextPopup;
     [SerializeField] private GameObject backgroundObj;
 
 
     [Space]
+    public FleetUpgrades[] fleetUpgrades;
     [SerializeField] private GameObject upgradeUIToSpawn;
     [SerializeField] private Transform upgradeUIParent;
     public GameObject attackPerSecondObjToSpawn;
@@ -35,10 +36,13 @@ public class ShipManager : MonoBehaviour
     public double fleetDamagePerClickUpgrade {  get; set; }
 
     //Health
-    private double shipHealth = 4.0;
+    private double shipHealth = 3.0;
     //Time To Spawn
     private float spawnTime = 2.0f;
-    private float timer = 0f;
+    private float timer = 1f;
+
+    private InitializeUpgrades initializeUpgrades;
+    private FleetDisplay fleetDisplay;
 
     private void Awake()
     {
@@ -48,23 +52,29 @@ public class ShipManager : MonoBehaviour
             instance = this;
         }
 
+        fleetDisplay = GetComponent<FleetDisplay>();
+
         UpdateScrapUI();
         UpdateFleetDamagePerSecondUI();
 
         upgradeCanvas.SetActive(false);
         MainGameCanvas.SetActive(true);
+
+        initializeUpgrades = GetComponent<InitializeUpgrades>();
+        initializeUpgrades.Initialize(fleetUpgrades, upgradeUIToSpawn, upgradeUIParent);
     }
 
     //Update the scrap counter UI element
-    private void UpdateScrapUI() { 
-       
-        scrapCounter.text = currentScrapCount.ToString();
+    private void UpdateScrapUI() {
+
+        fleetDisplay.UpdateGameText(currentScrapCount, scrapCounter);
     }
 
     //Update the damage per tap/click UI element
     private void UpdateFleetDamagePerSecondUI() { 
     
-        fleetDamagePerSecond.text = currentFleetDamagePerSecond.ToString() + "P/S";
+        fleetDisplay.UpdateGameText(currentFleetDamagePerSecond, fleetDamagePerSecond, "P/S");
+
     }
 
 
@@ -72,6 +82,8 @@ public class ShipManager : MonoBehaviour
     public void OnShipClicked() {
 
         ReduceHealth();
+
+        PopupText.Create(1 + fleetDamagePerClickUpgrade);
     }
 
 
@@ -94,6 +106,8 @@ public class ShipManager : MonoBehaviour
 
     public void ScrapIncrease(double amount) {
         
+        //Adjust this method so that damage is increased instead
+
         //Increase the amount 
         currentScrapCount += amount;
         UpdateScrapUI();
@@ -103,13 +117,8 @@ public class ShipManager : MonoBehaviour
     //Increase the damage done per tap
     public void FleetDamageIncrease(double amount) {
 
-        //Logic here is needed
-
-        //Goals:
-
-        //Initial auto damage is nonexistent
-
-        //Gradually increase the amount of damage done automatically over time
+       //Current Bug here sets the health value to a constant value
+       //Preventing the object from losing health and dying
 
         currentFleetDamagePerSecond += amount;
         UpdateFleetDamagePerSecondUI();
@@ -117,6 +126,23 @@ public class ShipManager : MonoBehaviour
 
     }
 
+
+    public void OnUpgradeButtonClick(FleetUpgrades upgrades, UpgradeButtonReferences buttonRef) { 
+    
+        if(currentScrapCount >= upgrades.CurrentUpgradeCost)
+        {
+
+            upgrades.ApplyUpgrade();
+
+            currentScrapCount -= upgrades.CurrentUpgradeCost;
+
+            upgrades.CurrentUpgradeCost = Mathf.Round((float)(upgrades.CurrentUpgradeCost * (1 + upgrades.CostIncreaseMultiplierPerUpgrade)));
+
+            buttonRef.upgradeCostText.text = "Cost: " + upgrades.CurrentUpgradeCost;
+
+        }
+
+    }
 
  
 
@@ -159,7 +185,6 @@ public class ShipManager : MonoBehaviour
         else {
             if (timer >= spawnTime)
             {
-                print("Calling Respawn");
                 //Respawn the object
                 RespawnShip();
                 //Reset the timer

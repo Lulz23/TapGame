@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Runtime.InteropServices;
+using System;
 
 public class ShipManager : MonoBehaviour
 {
@@ -34,13 +35,15 @@ public class ShipManager : MonoBehaviour
     public double fleetDamagePerClickUpgrade {  get; set; }
 
     //Health
-    private float shipHealth = 5;
+    private double shipHealth = 4.0;
     //Time To Spawn
-    private float spawnTime = 3.0f;
+    private float spawnTime = 2.0f;
     private float timer = 0f;
 
     private void Awake()
     {
+        currentFleetDamagePerSecond = 1;
+
         if (instance == null) { 
             instance = this;
         }
@@ -86,7 +89,18 @@ public class ShipManager : MonoBehaviour
         MainGameCanvas.SetActive(true);
     }
 
-    //For fleet auto damage
+
+    //Increase the amount of scrap earned from destroying fleets
+
+    public void ScrapIncrease(double amount) {
+        
+        //Increase the amount 
+        currentScrapCount += amount;
+        UpdateScrapUI();
+
+    }
+
+    //Increase the damage done per tap
     public void FleetDamageIncrease(double amount) {
 
         //Logic here is needed
@@ -97,35 +111,39 @@ public class ShipManager : MonoBehaviour
 
         //Gradually increase the amount of damage done automatically over time
 
+        currentFleetDamagePerSecond += amount;
+        UpdateFleetDamagePerSecondUI();
+
 
     }
 
+
+ 
 
     public void ReduceHealth() {
 
         if(shipHealth == 0) {
 
-            DestroyShip();
+            shipObj.SetActive(false);
             currentScrapCount += 1 + fleetDamagePerClickUpgrade;
             UpdateScrapUI();
         }
-
-        shipHealth--;
-    }
-
-    private void DestroyShip() { 
-    
-        shipObj.SetActive(false);
+        shipHealth = Math.Abs(shipHealth - currentFleetDamagePerSecond);
     }
 
     private void RespawnShip()
     {
-        shipHealth = 5;
+       
 
         //Can also have logic here to randomize which fleet is active
         shipObj.SetActive(true);
-
-
+        shipHealth = 5;
+        //If the current damage done by tapping is equal to the current ship health
+        //Double the current health.
+        if(shipHealth == currentFleetDamagePerSecond)
+        {
+            shipHealth *= 2;
+        }
 
     }
 
@@ -134,13 +152,21 @@ public class ShipManager : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer >= spawnTime && !(shipObj.activeSelf))
+        if (shipObj.activeSelf)
         {
-            //Respawn the object
-            RespawnShip();
-            //Reset the timer
-            timer = 0;
         }
+
+        else {
+            if (timer >= spawnTime)
+            {
+                print("Calling Respawn");
+                //Respawn the object
+                RespawnShip();
+                //Reset the timer
+                timer = 0;
+            }
+        }
+        
     }
 
 }

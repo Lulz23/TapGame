@@ -1325,8 +1325,7 @@ MonoBehaviour:
   damageTextPopup: {fileID: 5224501219732005111, guid: eeb26caee0c5f194d8a39ee504e93f6c, type: 3}
   backgroundObj: {fileID: 1839740339}
   fleetUpgrades:
-  - {fileID: 11400000, guid: a3487e6a3d66aeb499cd4ac72a98b2df, type: 2}
-  - {fileID: 11400000, guid: 217d3cd3bab8a5e499bdddd3186659a9, type: 2}
+  - {fileID: 11400000, guid: b9ffb6b15a227094085d159046388b85, type: 2}
   upgradeUIToSpawn: {fileID: 5719931587872166619, guid: 815d65e06ea443042b5d4ecab092aeac, type: 3}
   upgradeUIParent: {fileID: 1944760085}
   attackPerSecondObjToSpawn: {fileID: 2554236059794872206, guid: 69657490157ffc1478e7f3b051e32023, type: 3}
@@ -1913,7 +1912,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 0181c6f54b5b4a44ca7a9d27fcc636c6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1989,7 +1988,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 02e39cc69a5ebd4488860651adc52995, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d1261681636d96145abb4a4104f3774a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

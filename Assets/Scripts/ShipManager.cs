@@ -37,8 +37,10 @@ public class ShipManager : MonoBehaviour
 
     //Health
     private double shipHealth = 3.0;
+    private double maxShipHealth = 3.0;
+    //private double damage = 1;
     //Time To Spawn
-    private float spawnTime = 2.0f;
+    private float spawnTime = 3f;
     private float timer = 1f;
 
     private InitializeUpgrades initializeUpgrades;
@@ -46,7 +48,6 @@ public class ShipManager : MonoBehaviour
 
     private void Awake()
     {
-        currentFleetDamagePerSecond = 1;
 
         if (instance == null) { 
             instance = this;
@@ -82,8 +83,8 @@ public class ShipManager : MonoBehaviour
     public void OnShipClicked() {
 
         ReduceHealth();
-
-        PopupText.Create(1 + fleetDamagePerClickUpgrade);
+        print(shipObj.activeSelf);
+        PopupText.Create(fleetDamagePerClickUpgrade + 1);
     }
 
 
@@ -105,11 +106,12 @@ public class ShipManager : MonoBehaviour
     //Increase the amount of scrap earned from destroying fleets
 
     public void ScrapIncrease(double amount) {
-        
-        //Adjust this method so that damage is increased instead
 
-        //Increase the amount 
-        currentScrapCount += amount;
+        //Current bug, not currently applying upgrade
+
+        //Increase the amount of scrap earned from
+        //currentScrapCount += amount;
+        fleetDamagePerClickUpgrade += amount;
         UpdateScrapUI();
 
     }
@@ -129,17 +131,19 @@ public class ShipManager : MonoBehaviour
 
     public void OnUpgradeButtonClick(FleetUpgrades upgrades, UpgradeButtonReferences buttonRef) { 
     
+        //Not applying upgrade
+
         if(currentScrapCount >= upgrades.CurrentUpgradeCost)
         {
 
             upgrades.ApplyUpgrade();
 
             currentScrapCount -= upgrades.CurrentUpgradeCost;
+            UpdateScrapUI();   
 
             upgrades.CurrentUpgradeCost = Mathf.Round((float)(upgrades.CurrentUpgradeCost * (1 + upgrades.CostIncreaseMultiplierPerUpgrade)));
 
             buttonRef.upgradeCostText.text = "Cost: " + upgrades.CurrentUpgradeCost;
-
         }
 
     }
@@ -148,13 +152,16 @@ public class ShipManager : MonoBehaviour
 
     public void ReduceHealth() {
 
-        if(shipHealth == 0) {
+        print("Called Reduce Health");
 
+        if(shipHealth <= 0) {
+            print("Killed Ship");
             shipObj.SetActive(false);
-            currentScrapCount += 1 + fleetDamagePerClickUpgrade;
+            currentScrapCount += 1;
             UpdateScrapUI();
+            
         }
-        shipHealth = Math.Abs(shipHealth - currentFleetDamagePerSecond);
+        shipHealth = (shipHealth - (fleetDamagePerClickUpgrade + 1));
     }
 
     private void RespawnShip()
@@ -163,14 +170,14 @@ public class ShipManager : MonoBehaviour
 
         //Can also have logic here to randomize which fleet is active
         shipObj.SetActive(true);
-        shipHealth = 5;
         //If the current damage done by tapping is equal to the current ship health
         //Double the current health.
-        if(shipHealth == currentFleetDamagePerSecond)
+        if(maxShipHealth <= fleetDamagePerClickUpgrade)
         {
-            shipHealth *= 2;
+            maxShipHealth *= 2;
         }
 
+        shipHealth = maxShipHealth;
     }
 
     //To respawn the enemy fleet with the timer
@@ -178,20 +185,15 @@ public class ShipManager : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (shipObj.activeSelf)
+        if (timer >= spawnTime && !(shipObj.activeSelf))
         {
+            //Respawn the object
+            RespawnShip();
+            print("Called Respawn");
+            //Reset the timer
+            timer = 1;
         }
 
-        else {
-            if (timer >= spawnTime)
-            {
-                //Respawn the object
-                RespawnShip();
-                //Reset the timer
-                timer = 0;
-            }
-        }
-        
     }
 
 }

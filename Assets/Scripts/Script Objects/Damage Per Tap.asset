@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Damage Per Tap
   m_EditorClassIdentifier: 
   UpgradeAmount: 1
-  OriginalUpgradeCost: 2
-  CurrentUpgradeCost: 2
+  OriginalUpgradeCost: 10
+  CurrentUpgradeCost: 10
   CostIncreaseMultiplierPerUpgrade: 0.08
   UpgradeButtonText: Better cannons
   UpgradeButtonDescription: Increase damage per tap

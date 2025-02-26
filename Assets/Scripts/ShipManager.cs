@@ -68,13 +68,13 @@ public class ShipManager : MonoBehaviour
     //Update the scrap counter UI element
     private void UpdateScrapUI() {
 
-        fleetDisplay.UpdateGameText(currentScrapCount, scrapCounter);
+        fleetDisplay.UpdateGameText(currentScrapCount, scrapCounter, " Total Scrap Earned");
     }
 
     //Update the damage per tap/click UI element
     private void UpdateFleetDamagePerSecondUI() { 
     
-        fleetDisplay.UpdateGameText(currentFleetDamagePerSecond, fleetDamagePerSecond, "P/S");
+        fleetDisplay.UpdateGameText(currentFleetDamagePerSecond, fleetDamagePerSecond, " Coming Soon!!");
 
     }
 
@@ -130,8 +130,6 @@ public class ShipManager : MonoBehaviour
 
 
     public void OnUpgradeButtonClick(FleetUpgrades upgrades, UpgradeButtonReferences buttonRef) { 
-    
-        //Not applying upgrade
 
         if(currentScrapCount >= upgrades.CurrentUpgradeCost)
         {

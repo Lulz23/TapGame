@@ -46,9 +46,12 @@ public class ShipManager : MonoBehaviour
     private InitializeUpgrades initializeUpgrades;
     private FleetDisplay fleetDisplay;
 
+    //For saving and loading game data
+    public GameData gameData;
+
     private void Awake()
     {
-
+        gameData = SaveSystem.Load();
         if (instance == null) { 
             instance = this;
         }
@@ -83,7 +86,6 @@ public class ShipManager : MonoBehaviour
     public void OnShipClicked() {
 
         ReduceHealth();
-        print(shipObj.activeSelf);
         PopupText.Create(fleetDamagePerClickUpgrade + 1);
     }
 
@@ -150,14 +152,14 @@ public class ShipManager : MonoBehaviour
 
     public void ReduceHealth() {
 
-        print("Called Reduce Health");
-
         if(shipHealth <= 0) {
-            print("Killed Ship");
             shipObj.SetActive(false);
             currentScrapCount += 1;
             UpdateScrapUI();
-            
+
+            //Save the current scrap earned
+            gameData.totalScrapeEarned += currentScrapCount;
+            SaveSystem.Save(gameData);
         }
         shipHealth = (shipHealth - (fleetDamagePerClickUpgrade + 1));
     }
@@ -187,7 +189,6 @@ public class ShipManager : MonoBehaviour
         {
             //Respawn the object
             RespawnShip();
-            print("Called Respawn");
             //Reset the timer
             timer = 1;
         }

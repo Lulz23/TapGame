@@ -14,6 +14,8 @@ public class ShipManager : MonoBehaviour
     [SerializeField] private GameObject upgradeCanvas;
     [SerializeField] private TextMeshProUGUI scrapCounter;
     [SerializeField] private TextMeshProUGUI fleetDamagePerSecond;
+    [SerializeField] private TextMeshProUGUI screenTimer;
+    [SerializeField] private TextMeshProUGUI enemyFleetHealth;
 
     //This can be copied to have multiple fleet objects
     [SerializeField] private GameObject shipObj;
@@ -39,9 +41,16 @@ public class ShipManager : MonoBehaviour
     private double shipHealth = 3.0;
     private double maxShipHealth = 3.0;
     //private double damage = 1;
+
     //Time To Spawn
     private float spawnTime = 3f;
     private float timer = 1f;
+
+    //Timer for progression
+    private float killTimer = 5;
+
+    //Timer for ad display
+    private float adTimer = 1f;
 
     private InitializeUpgrades initializeUpgrades;
     private FleetDisplay fleetDisplay;
@@ -60,6 +69,7 @@ public class ShipManager : MonoBehaviour
 
         UpdateScrapUI();
         UpdateFleetDamagePerSecondUI();
+        UpdateOnScreenHealth();
 
         upgradeCanvas.SetActive(false);
         MainGameCanvas.SetActive(true);
@@ -81,12 +91,22 @@ public class ShipManager : MonoBehaviour
 
     }
 
+    //Update on screen timer
+    private void UpdateScreenTimer() {
+        screenTimer.text = "Destroy the fleet before time runs out! " + killTimer;
+    }
+
+    //Update on screen health
+    private void UpdateOnScreenHealth() {
+        enemyFleetHealth.text = "Health Remaining: " + shipHealth;
+    }
 
     //Reduce the enemy ship health until 0 and remove it, then spawn a new one
     public void OnShipClicked() {
 
         ReduceHealth();
         PopupText.Create(fleetDamagePerClickUpgrade + 1);
+        UpdateOnScreenHealth();
     }
 
 
@@ -178,12 +198,31 @@ public class ShipManager : MonoBehaviour
         }
 
         shipHealth = maxShipHealth;
+        UpdateOnScreenHealth();
     }
 
     //To respawn the enemy fleet with the timer
     private void Update()
     {
         timer += Time.deltaTime;
+
+        killTimer -= Time.deltaTime;
+
+        //Reduce a timer to incentivise player to act
+        if(killTimer >=0) {
+            UpdateScreenTimer();
+            //If timer reaches below 1, reset timer
+            if(killTimer <= 1) {
+                killTimer = 5;
+                UpdateScreenTimer();
+                //Reduce the maximum health, down until minimum of 3
+                if(maxShipHealth > 3) {
+                    maxShipHealth = (float)(maxShipHealth / 2);
+                }
+                //Respawn the ship
+                RespawnShip();
+            }
+        }
 
         if (timer >= spawnTime && !(shipObj.activeSelf))
         {
@@ -192,6 +231,7 @@ public class ShipManager : MonoBehaviour
             //Reset the timer
             timer = 1;
         }
+
 
     }
 

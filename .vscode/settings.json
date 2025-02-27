@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "cave of the mind.sln"
+    "dotnet.defaultSolution": "TapGame.sln"
 }

@@ -16,6 +16,7 @@ public class ShipManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI fleetDamagePerSecond;
     [SerializeField] private TextMeshProUGUI screenTimer;
     [SerializeField] private TextMeshProUGUI enemyFleetHealth;
+    [SerializeField] private GameObject advertObject;
 
     //This can be copied to have multiple fleet objects
     [SerializeField] private GameObject shipObj;
@@ -52,6 +53,9 @@ public class ShipManager : MonoBehaviour
     //Timer for ad display
     private float adTimer = 1f;
 
+    //Variable to determine when to display ad
+    private int fleetsKilled = 0;
+
     private InitializeUpgrades initializeUpgrades;
     private FleetDisplay fleetDisplay;
 
@@ -74,6 +78,8 @@ public class ShipManager : MonoBehaviour
         upgradeCanvas.SetActive(false);
         MainGameCanvas.SetActive(true);
 
+        advertObject.SetActive(false);
+
         initializeUpgrades = GetComponent<InitializeUpgrades>();
         initializeUpgrades.Initialize(fleetUpgrades, upgradeUIToSpawn, upgradeUIParent);
     }
@@ -93,12 +99,16 @@ public class ShipManager : MonoBehaviour
 
     //Update on screen timer
     private void UpdateScreenTimer() {
-        screenTimer.text = "Destroy the fleet before time runs out! " + killTimer;
+        screenTimer.text = "Destroy the fleet before time runs out! " + (int)(MathF.Round(killTimer));
     }
 
     //Update on screen health
     private void UpdateOnScreenHealth() {
-        enemyFleetHealth.text = "Health Remaining: " + shipHealth;
+        enemyFleetHealth.text = "Health Remaining: " + (int)(shipHealth);
+    }
+
+    private void ShowAdScreen() {
+        advertObject.SetActive(true);
     }
 
     //Reduce the enemy ship health until 0 and remove it, then spawn a new one
@@ -107,6 +117,7 @@ public class ShipManager : MonoBehaviour
         ReduceHealth();
         PopupText.Create(fleetDamagePerClickUpgrade + 1);
         UpdateOnScreenHealth();
+
     }
 
 
@@ -177,17 +188,26 @@ public class ShipManager : MonoBehaviour
             currentScrapCount += 1;
             UpdateScrapUI();
 
+            //Increase the number of fleets killed by 1
+            fleetsKilled++;
+
             //Save the current scrap earned
             gameData.totalScrapeEarned += currentScrapCount;
             SaveSystem.Save(gameData);
         }
         shipHealth = (shipHealth - (fleetDamagePerClickUpgrade + 1));
+
+        if (fleetsKilled >= 10 && !(advertObject.activeSelf)) {
+            ShowAdScreen();
+
+            //Reset the number of fleets killed
+            fleetsKilled = 0;
+        }
     }
 
     private void RespawnShip()
     {
        
-
         //Can also have logic here to randomize which fleet is active
         shipObj.SetActive(true);
         //If the current damage done by tapping is equal to the current ship health
@@ -199,6 +219,8 @@ public class ShipManager : MonoBehaviour
 
         shipHealth = maxShipHealth;
         UpdateOnScreenHealth();
+        //Reset the kill timer back to 5 seconds
+        killTimer = 5;
     }
 
     //To respawn the enemy fleet with the timer
@@ -213,8 +235,10 @@ public class ShipManager : MonoBehaviour
             UpdateScreenTimer();
             //If timer reaches below 1, reset timer
             if(killTimer <= 1) {
+
                 killTimer = 5;
                 UpdateScreenTimer();
+                //If the player is unable to kill the ship in time
                 //Reduce the maximum health, down until minimum of 3
                 if(maxShipHealth > 3) {
                     maxShipHealth = (float)(maxShipHealth / 2);
@@ -224,6 +248,7 @@ public class ShipManager : MonoBehaviour
             }
         }
 
+
         if (timer >= spawnTime && !(shipObj.activeSelf))
         {
             //Respawn the object
@@ -232,6 +257,21 @@ public class ShipManager : MonoBehaviour
             timer = 1;
         }
 
+        //Timer for how long to display ad
+        if (advertObject.activeSelf)
+        {
+            //Start the timer
+            adTimer += Time.deltaTime;
+
+            //When timer reaches 5 seconds, turn off the add and reset the clock
+            if (adTimer >= 5) {
+
+                //"Auto close" the advert
+                advertObject.SetActive(false);
+                //Reset the ad timer
+                adTimer = 0f;
+            }
+        }
 
     }
 

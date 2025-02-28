@@ -646,7 +646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e357e0885c37448ab1b2526025ef6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messagePanel: {fileID: 0}
+  messagePanel: {fileID: 312168141}
   messageText: {fileID: 0}
 --- !u!114 &312168144
 MonoBehaviour:

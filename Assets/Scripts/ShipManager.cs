@@ -62,6 +62,9 @@ public class ShipManager : MonoBehaviour
     //For saving and loading game data
     public GameData gameData;
 
+    //Call to the TutorialManager
+    private TutorialManager tutorialManager;
+
     private void Awake()
     {
         gameData = SaveSystem.Load();
@@ -82,6 +85,9 @@ public class ShipManager : MonoBehaviour
 
         initializeUpgrades = GetComponent<InitializeUpgrades>();
         initializeUpgrades.Initialize(fleetUpgrades, upgradeUIToSpawn, upgradeUIParent);
+
+        // Finding the TutorialManager
+        tutorialManager = FindObjectOfType<TutorialManager>();
     }
 
     //Update the scrap counter UI element
@@ -183,10 +189,18 @@ public class ShipManager : MonoBehaviour
 
     public void ReduceHealth() {
 
-        if(shipHealth <= 0) {
+        if (shipHealth <= 0) {
             shipObj.SetActive(false);
             currentScrapCount += 1;
             UpdateScrapUI();
+
+            // Notify le TutorialManager to hide the message
+            if (tutorialManager != null)
+                    { 
+          
+                        tutorialManager.HideMessage();
+                    }
+
 
             //Increase the number of fleets killed by 1
             fleetsKilled++;

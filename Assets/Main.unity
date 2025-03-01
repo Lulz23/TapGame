@@ -738,7 +738,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5621, y: -7057}
+  m_AnchoredPosition: {x: -5185, y: -5847}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &742218331
@@ -775,7 +775,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Tap Here to:'
+  m_text: 'Tap Here to
+
+    upgrade:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1572,6 +1574,7 @@ MonoBehaviour:
   backgroundObj: {fileID: 1839740339}
   fleetUpgrades:
   - {fileID: 11400000, guid: b9ffb6b15a227094085d159046388b85, type: 2}
+  - {fileID: 11400000, guid: 1873711f6ce04dc458ffdd4502a37363, type: 2}
   upgradeUIToSpawn: {fileID: 5719931587872166619, guid: 815d65e06ea443042b5d4ecab092aeac, type: 3}
   upgradeUIParent: {fileID: 1944760085}
   attackPerSecondObjToSpawn: {fileID: 2554236059794872206, guid: 69657490157ffc1478e7f3b051e32023, type: 3}

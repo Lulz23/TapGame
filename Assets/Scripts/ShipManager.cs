@@ -225,8 +225,9 @@ public class ShipManager : MonoBehaviour
         //Can also have logic here to randomize which fleet is active
         shipObj.SetActive(true);
         //If the current damage done by tapping is equal to the current ship health
+        //Or if the damage done is greater than or equal to half of the max health
         //Double the current health.
-        if(maxShipHealth <= fleetDamagePerClickUpgrade)
+        if(maxShipHealth <= fleetDamagePerClickUpgrade || fleetDamagePerClickUpgrade >= (maxShipHealth/2))
         {
             maxShipHealth *= 2;
         }
